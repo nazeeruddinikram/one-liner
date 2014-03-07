@@ -1,7 +1,7 @@
 Line spacing
 ========
 
-* Append a blank line to every line
+* Append a blank line to each line
 
     ```
         sed G
@@ -11,7 +11,7 @@ Line spacing
 
     At default, function print would provide 'ORS' in awk, so we don't have to give it a '\n'.
 
-* Prepend a blank line to every line
+* Prepend a blank line to each line
 
     ```
         sed '{x;p;x}'
@@ -26,3 +26,22 @@ Line spacing
         awk NF
         perl -ne 'print if(!/^$/)'
     ```
+
+Numbering
+========
+
+* Number each line of a file
+
+```
+    sed = filename | sed 'N;s/\n/\t/'
+    awk '{print NR "\t" $0}'
+    perl -pe 'print "$.\t"'    OR    perl -ne 'print "$.\t$_"'
+```
+
+* Count lines
+
+```
+    sed -n '$='
+    awk 'END {print NR}'
+    perl -nle 'END {print $.}'
+```
