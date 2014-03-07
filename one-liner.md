@@ -2,10 +2,11 @@ Line spacing
 ========
 
 ** Append a blank line to every line **
-
+```
     sed G
     awk '1;{print ""}'
     perl -ne 'print "$_\n"'
+```
 
 At default, function print would provide 'ORS' in awk, so we don't have to give it a '\n'.
 
