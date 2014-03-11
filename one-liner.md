@@ -104,3 +104,36 @@ Text substitution
         awk '!/baz/ {gsub(/foo/,"bar")} 1'
         perl -pe 's/foo/bar/g unless /baz/'
     ```
+
+* Change "a" or "b" or "c" to "d"
+
+    ```
+        sed 's/a/d/g;s/b/d/g;s/c/d/g'
+        sed 's/a\|b\|c/d/g' # GNU sed only
+        awk '{gsub(/a|b|c/,"d")} 1'
+        perl -pe 's/a|b|c/d/g'
+    ```
+
+* Reverse order of lines (emulates "tac")
+
+    ```
+        sed '1!G;h;$!d'
+        awk '{a[i++]=$0} END {for(j=i-1;j>=0;j--) print a[j]}'
+        perl -e 'print reverse <>'
+    ```
+
+* Reverse each chracter on the line (emulates "rev")
+
+    ```
+        sed '/\n/!G;s/\(.\)\(.*\n\)/&\2\1/;//D;s/.//'
+        awk '{for(i=length($0);i>0;i--) printf("%s",substr($0,i,1));print ""}'
+        perl -ple '$_=reverse'
+    ```
+
+* Join pairs of lines side-by-side (emulates "paste")
+
+    ```
+        sed '$!N;s/\n//'
+        awk '{f=!f; printf("%s%s",$0,f ? "" : "\n")}'
+        perl -pe 's/\n// if $.%2'
+    ```
